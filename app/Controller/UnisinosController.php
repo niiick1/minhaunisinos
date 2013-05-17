@@ -38,7 +38,7 @@ class UnisinosController extends AppController {
 
     $this->selectContext($contexto['rdContexto']);
 
-
+    $this->redirect('getNotas');
   }
 
   public $LOGIN_URL = 'https://portal.asav.org.br/Corpore.Net/Login.aspx';

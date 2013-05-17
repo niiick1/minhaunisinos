@@ -16,27 +16,26 @@
   </ul>
   <div class="tab-content">
 
-    <?php foreach ($etapas as $k => $etapa) {
-      
-    ?>
+    <?php foreach ($etapas as $k => $etapa) : ?>
       <div class="tab-pane <?php echo ($k == 0 ? 'active' : ''); ?>" id="tab<?php echo $k+1;?>">
-        
-        <?php foreach ($etapa['Materia'] as $key => $materia) {
-            echo $this->Html->tag('h4', $materia['nome']);
 
-        ?>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Avaliação</th>
-                <th>Peso</th>
-                <th>Nota</th>
-              </tr>
-            </thead>
+        <table class="table table-bordered table-striped table-condensed">
+          <thead>
+            <tr>
+              <th>Avaliação</th>
+              <th>Peso</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
 
-            <tbody>
-              <?php foreach ($materia['Avaliacao'] as $key => $aval) {
-              ?>
+          <tbody>
+            <tr><td colspan="3"></td></tr>
+            <?php foreach($etapa['Materia'] as $key=> $materia) :?>
+
+              <tr><?php echo $this->Html->tag('th', $materia['nome'], array('colspan' => '3')); ?></tr>
+
+              <?php foreach($materia['Avaliacao'] as $key => $aval) : ?>
+
                 <tr>
                   <?php
                     echo $this->Html->tag('td', $aval['nome']);
@@ -45,25 +44,23 @@
                   ?>
                 </tr>
 
-              <?php
-              }?>
-            </tbody>
+              <?php endforeach; ?>
 
-            <tfoot>
-                <?php
-                  echo $this->Html->tag('th', '');
-                  echo $this->Html->tag('th', 'Σ: '.$materia['pesoTotal']);
-                  echo $this->Html->tag('th', 'Σ: '.$materia['notaTotal']);
-                ?>
-            </tfoot>
-          </table>
-        <?php
-        }?>
+              <tr>
+                <th>Total</th>
+                <th><?php echo $materia['pesoTotal']; ?></th>
+                <th><?php echo $materia['notaTotal']; ?></th>
+              </tr>
+
+              <tr><td colspan="3"></td></tr>
+
+            <?php endforeach; ?>
+
+          </tbody>
+        </table>
 
       </div>
-    <?php
-
-    }?>
+    <?php endforeach; ?>
 
   </div>
 </div>

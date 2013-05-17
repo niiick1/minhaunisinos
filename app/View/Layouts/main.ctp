@@ -3,14 +3,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Login &middot; Veja suas notas</title>
+    <title>Unisinos Mobile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <?php 
       echo $this->Html->css(array(
-        'bootstrap',
+        'bootstrap.min',
         'system',
         'bootstrap-responsive'
       ));

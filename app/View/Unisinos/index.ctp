@@ -11,7 +11,7 @@ if ($page == 'login') {
     echo $this->Form->input('user', array('class' => 'input-block-level', 'placeholder' => 'User', 'label' => false));
     echo $this->Form->input('password', array('class' => 'input-block-level', 'placeholder' => 'Password', 'label' => false));
 
-    echo $this->Form->button('Login', array('class' => 'btn btn-large btn-primary'));
+    echo $this->Form->button('Login', array('class' => 'btn btn-primary'));
 
   echo $this->Form->end();
 
