@@ -78,7 +78,7 @@ class UnisinosController extends AppController {
 
     $inputs['txtUser'] = $user;
     $inputs['txtPass'] = $pass;
-    $inputs['ddlAlias'] = 'CorporeRM';
+    //$inputs['ddlAlias'] = 'CorporeRM';
 
     $h->setData($inputs);
 
