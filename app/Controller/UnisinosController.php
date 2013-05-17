@@ -156,6 +156,11 @@ class UnisinosController extends AppController {
   }
 
   public function getNotas() {
+    $cookies = $this->Session->read('Unisinos.Cookies');
+    if (empty($cookies)) {
+        $this->Session->setFlash('Sua sessão expirou.');
+        $this->redirect('index');
+    }
 
     App::uses('SimpleHtmlDomBakedComponent', 'Controller/Component');
 
