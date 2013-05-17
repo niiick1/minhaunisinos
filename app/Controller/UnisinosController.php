@@ -157,6 +157,7 @@ class UnisinosController extends AppController {
 
   public function getNotas() {
     $cookies = $this->Session->read('Unisinos.Cookies');
+    
     if (empty($cookies)) {
         $this->Session->setFlash('Sua sessão expirou.');
         $this->redirect('index');
@@ -175,6 +176,11 @@ class UnisinosController extends AppController {
     
     $gNotas = $h->get();
     $html->load($gNotas);
+
+   if (strpos($gNotas, '/Corpore.Net/Login.aspx') !== false) {
+        $this->Session->setFlash('Sua sessão expirou.');
+        $this->redirect('index');
+    };
 
     $divPrincipal = $html->find('div[id=ctl23_pnlPrincipal]',0);
 
