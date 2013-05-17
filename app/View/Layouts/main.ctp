@@ -11,8 +11,8 @@
     <?php 
       echo $this->Html->css(array(
         'bootstrap.min',
-        'system',
-        'bootstrap-responsive'
+        'bootstrap-responsive',
+        'system'
       ));
     
       $this->fetch('css');

@@ -64,3 +64,7 @@
 
   </div>
 </div>
+
+<div>
+  <?php echo $this->Html->link('Trocar Contexto', 'login', array('class' => 'btn btn-small')); ?>
+</div>

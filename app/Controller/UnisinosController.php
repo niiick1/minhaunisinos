@@ -7,29 +7,40 @@ class UnisinosController extends AppController {
   public $layout = 'main';
 
   public function index() {
+    $this->Session->delete('Unisinos');
+    $this->redirect('login');
+  }
 
-    $page = 'login';
+  public function login() {
+    $cookies = $this->Session->read('Unisinos.Cookies');
+    if (!empty($cookies)) {
+        $this->setContextsView();
+        return $this->render('get_contexts');
+    }
 
     if (!empty($this->request->data['Login']['user'])) {
         $user = $this->request->data['Login']['user'];
         $pass = $this->request->data['Login']['password'];
 
-        $page = 'contexts';
-        $contexts = $this->getContexts($user, $pass);
-        $this->Session->write('Unisinos.Contextos', $contexts);
+        $this->getContexts($user, $pass);
 
-        $nContexts = array();
-        foreach ($contexts as $context) {
-            $x = explode('¶', $context['rdContexto']);
-            $nContexts[] = $x[3];
-        }
+        $this->setContextsView();
 
-        $this->set('contexts', $nContexts);
+        return $this->render('get_contexts');
     } else {
         $this->Session->delete('Unisinos');
     }
+  }
 
-    $this->set('page', $page);
+  private function setContextsView() {
+    $nContexts = array();
+    $radios = $this->Session->read('Unisinos.Contextos');
+    foreach ($radios as $context) {
+        $x = explode('¶', $context['rdContexto']);
+        $nContexts[] = $x[3];
+    }   
+
+    $this->set('contexts', $nContexts);
   }
 
   public function menu($key) {
@@ -78,7 +89,8 @@ class UnisinosController extends AppController {
     $divLogin = $html->find('table[id=tableContainerError]',0);
     if ($divLogin) {
         $this->Session->setFlash('Dados incorretos', 'default', array('class' => 'message error'));
-        $this->redirect('index');
+        $this->Session->delete('Unisinos.Cookies');
+        $this->redirect('login');
     }
 
     //Pega os cookies
@@ -113,7 +125,8 @@ class UnisinosController extends AppController {
 
     $this->Session->write('Unisinos.Data', $inputs);
 
-    return $radios;
+    $this->Session->write('Unisinos.Contextos', $radios);
+
   }
 
   private function selectContext($context) {
@@ -160,7 +173,7 @@ class UnisinosController extends AppController {
     
     if (empty($cookies)) {
         $this->Session->setFlash('Sua sessão expirou.');
-        $this->redirect('index');
+        $this->redirect('login');
     }
 
     App::uses('SimpleHtmlDomBakedComponent', 'Controller/Component');
@@ -179,6 +192,7 @@ class UnisinosController extends AppController {
 
    if (strpos($gNotas, '/Corpore.Net/Login.aspx') !== false) {
         $this->Session->setFlash('Sua sessão expirou.');
+        $this->Session->delete('Unisinos.Cookies');
         $this->redirect('index');
     };
 
