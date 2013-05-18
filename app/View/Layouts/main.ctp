@@ -10,8 +10,8 @@
 
     <?php 
       echo $this->Html->css(array(
-        'bootstrap.min',
-        'bootstrap-responsive',
+        '../lib/bootstrap/css/bootstrap.min',
+        '../lib/bootstrap/css/bootstrap-responsive',
         'system'
       ));
     
@@ -55,21 +55,9 @@
     <?php
 
       echo $this->Html->script(array(
-        'jquery.js',
-        'bootstrap.min.js',
-        'system.js',
-        #'bootstrap-transition.js',
-        #'bootstrap-alert.js',
-        #'bootstrap-modal.js',
-        #'bootstrap-dropdown.js',
-        #'bootstrap-scrollspy.js',
-        #'bootstrap-tab.js',
-        #'bootstrap-tooltip.js',
-        #'bootstrap-popover.js',
-        #'bootstrap-button.js',
-        #'bootstrap-collapse.js',
-        #'bootstrap-carousel.js',
-        #'bootstrap-typeahead.js'
+        '../lib/jquery.js',
+        '../lib/bootstrap/js/bootstrap.min.js',
+        'system.js'
       ));
 
       $this->fetch('script');
