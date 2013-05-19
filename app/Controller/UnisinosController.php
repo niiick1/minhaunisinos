@@ -49,13 +49,13 @@ class UnisinosController extends AppController {
 
     $this->selectContext($contexto['rdContexto']);
 
-    $this->redirect('getNotas');
+    //$this->redirect('getNotas');
   }
 
   public $LOGIN_URL = 'https://portal.asav.org.br/Corpore.Net/Login.aspx';
   public $CONTEXT_URL = 'https://portal.asav.org.br/Corpore.Net/Source/Edu-Educacional/RM.EDU.CONTEXTO/EduSelecionarContextoModalWebForm.aspx';
   public $NOTAS_URL = 'https://portal.asav.org.br/Corpore.Net/Main.aspx?SelectedMenuIDKey=mnNotasAval&ActionID=EduNotaAvaliacaoActionWeb';
-
+  public $NOTAS_FALTA_URL = 'https://portal.asav.org.br/Corpore.Net/Main.aspx?SelectedMenuIDKey=mnNotasEtapa&ActionID=EduNotaEtapaActionWeb';
 
   public function getContexts($user, $pass) {
 
@@ -190,7 +190,7 @@ class UnisinosController extends AppController {
     $gNotas = $h->get();
     $html->load($gNotas);
 
-   if (strpos($gNotas, '/Corpore.Net/Login.aspx') !== false) {
+    if (strpos($gNotas, '/Corpore.Net/Login.aspx') !== false) {
         $this->Session->setFlash('Sua sessão expirou.');
         $this->Session->delete('Unisinos.Cookies');
         $this->redirect('index');
@@ -241,6 +241,54 @@ class UnisinosController extends AppController {
 
   }
 
+  public function getFaltas() {
+
+    $cookies = $this->Session->read('Unisinos.Cookies');
+    
+    if (empty($cookies)) {
+        $this->Session->setFlash('Sua sessão expirou.');
+        $this->redirect('login');
+    }
+
+    App::uses('SimpleHtmlDomBakedComponent', 'Controller/Component');
+
+    $html = new SimpleHtmlDomBakedComponent();
+    
+    $h =& $this->HttpRequest;
+    
+    $h->setUri($this->NOTAS_FALTA_URL);
+    
+    $cookies = $this->Session->read('Unisinos.Cookies');
+    $h->setCookies($cookies);
+    
+    $gFaltas = $h->get();
+    $html->load($gFaltas);
+
+    if (strpos($gFaltas, '/Corpore.Net/Login.aspx') !== false) {
+        $this->Session->setFlash('Sua sessão expirou.');
+        $this->Session->delete('Unisinos.Cookies');
+        $this->redirect('index');
+    };
+
+    $table = $html->find('table[id=ctl23_xgvFaltas]',0);
+
+    $faltas = array();
+    if ($table) {
+        $tableFaltas = $table->find('table[id=ctl23_xgvFaltas_DXMainTable]',0);
+
+        foreach ($tableFaltas->find('tr[id^=ctl23_xgvFaltas_DXDataRow]') as $k => $falta) {
+            $n = $k == 0 ? 1 : 0;
+            $mat = $falta->children(2)->find('text',$n);
+            $quant = $falta->children(4)->find('text',0);
+            $faltas[$k] = array(
+                'materia' => $mat ? $mat->plaintext : '',
+                'quantidade' => $quant ? $quant->plaintext : ''
+            );
+        }
+    }
+
+    $this->set('faltas', $faltas);
+  }
 }
 
 ?>

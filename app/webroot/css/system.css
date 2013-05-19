@@ -1,16 +1,17 @@
 @media (max-width: 979px)
 body {
-  padding-top: 20px;
+  padding-top: 0px;
 }
 body {
-  padding-top: 40px;
+  padding-top: 0px;
   padding-bottom: 40px;
   background-color: #f5f5f5;
 }
 .footer {
   text-align: center;
-  padding: 30px 0;
-  margin-top: 70px;
+  padding: 0;
+  padding-top: 30px;
+  margin-top: 0px;
   border-top: 1px solid #e5e5e5;
   background-color: #f5f5f5;
 }
@@ -32,7 +33,7 @@ body {
 .form-signin {
   max-width: 300px;
   padding: 19px 29px 29px;
-  margin: 0 auto 20px;
+  margin: 20px auto 20px;
   background-color: #fff;
   border: 1px solid #e5e5e5;
   -webkit-border-radius: 5px;

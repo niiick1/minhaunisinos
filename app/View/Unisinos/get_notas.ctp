@@ -2,6 +2,8 @@
   
   if (empty($etapas)) {
     echo $this->Html->tag('h3', 'Nenhuma nota registrada.');
+  } else {
+    echo $this->Html->tag('h3', 'Notas');
   }
 
 ?>
@@ -65,6 +67,4 @@
   </div>
 </div>
 
-<div>
-  <?php echo $this->Html->link('Trocar Contexto', 'login', array('class' => 'btn btn-small')); ?>
-</div>
+<?php echo $this->Html->link('Trocar Contexto', 'login', array('class' => 'btn btn-small')); ?>
